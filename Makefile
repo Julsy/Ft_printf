@@ -16,7 +16,7 @@ TMP_LIB = ft_printf.a
 
 CFLAGS = -Wall -Wextra -Werror
 
-ORIGIN_LIB = libft.a
+ORIG_LIB = libft.a
 
 FILENAMES = ft_printf.c helper.c get_flags.c process_char.c process_ptr.c \
 process_digit.c process_percent.c process_flags.c
@@ -30,13 +30,13 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	ar rc $(TMP_LIB) $(OBJECTS)
-	libtool -static -o $@ $(TMP_LIB) $(ORIGIN_LIB)
+	libtool -static -o $@ $(TMP_LIB) $(ORIG_LIB)
 
 clean:
 	/bin/rm -f $(OBJECTS)
 
 fclean: clean
-	/bin/rm -f $(NAME) $(ft_printf.a)
+	/bin/rm -f $(NAME) $(TMP_LIB)
 
 re: fclean all
 
