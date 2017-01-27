@@ -28,7 +28,7 @@ all: $(NAME)
 %.o: %.c
 	gcc $(CFlAGS) -c $< -o $@
 
-libftprintf.a: $(OBJECTS)
+$(NAME): $(OBJECTS)
 	ar rc $(TMP_LIB) $(OBJECTS)
 	libtool -static -o $@ $(TMP_LIB) $(ORIGIN_LIB)
 
