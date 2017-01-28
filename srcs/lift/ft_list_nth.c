@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_list_at.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: iiliuk <iiliuk@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/07/27 17:38:09 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/07/27 21:38:32 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+t_list		*ft_list_nth(t_list *begin_list, unsigned int nbr)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	t_list	*list;
+
+	list = begin_list;
+	while (nbr > 1)
+	{
+		if (!list)
+			return (NULL);
+		list = list->next;
+		nbr--;
+	}
+	return (list);
 }

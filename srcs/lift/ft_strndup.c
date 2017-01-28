@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2017/01/19 15:18:28 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/01/19 15:18:28 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	char			*res;
+	unsigned int	i;
+
+	i = 0;
+	res = (char *)malloc(sizeof(char) * n);
+	if (!res)
+		return (NULL);
+	while (i < n)
+	{
+		res[i] = s[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

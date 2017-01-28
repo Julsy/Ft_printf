@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/22 14:29:42 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/22 14:29:42 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	unsigned int i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (s1[i] == s2[i] && i < n && s1[i] != '\0')
+		i++;
+	if (i == n)
+		return ((unsigned char)s1[i - 1] - (unsigned char)s2[i - 1]);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

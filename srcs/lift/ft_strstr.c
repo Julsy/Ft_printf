@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/29 12:17:19 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/12/01 15:25:36 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+char	*ft_strstr(const char *big, const char *little)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (*little == '\0')
+		return ((char *)big);
+	while (big[i])
+	{
+		j = 0;
+		while (little[j] == big[i + j] && little[j])
+			j++;
+		if (j == ft_strlen(little))
+			return ((char *)&big[i]);
+		i++;
+	}
+	return (NULL);
 }

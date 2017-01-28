@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/23 17:20:12 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/23 17:20:12 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	size_t			i;
+	unsigned char	*str;
+
+	i = 0;
+	str = (unsigned char*)s;
+	while (i < n)
+	{
+		if (str[i] == (unsigned char)c)
+			return ((void*)&str[i]);
+		i++;
+	}
+	return (NULL);
 }

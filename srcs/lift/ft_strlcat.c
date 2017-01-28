@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/28 11:52:38 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/28 11:52:38 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	size_t src_len;
+	size_t dst_len;
+
+	src_len = ft_strlen(src);
+	dst_len = ft_strlen(dst);
+	if (dst_len < size)
+	{
+		ft_memcpy(dst + dst_len, src, size - dst_len - 1);
+		dst[size - 1] = '\0';
+		return (dst_len + src_len);
+	}
+	return (size + src_len);
 }

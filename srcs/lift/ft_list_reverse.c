@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_list_reverse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: iiliuk <iiliuk@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/07/27 17:46:35 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/07/27 22:40:15 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void		ft_list_reverse(t_list **begin_list)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	t_list *prev;
+	t_list *current;
+	t_list *tmp;
+
+	prev = 0;
+	current = *begin_list;
+	while (current)
+	{
+		tmp = current->next;
+		current->next = prev;
+		prev = current;
+		current = tmp;
+	}
+	*begin_list = prev;
 }

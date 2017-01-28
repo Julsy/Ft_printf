@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/23 14:17:43 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/23 15:31:46 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	size_t	i;
+	char	*str_dst;
+	char	*str_src;
+
+	i = 0;
+	str_dst = (char *)dst;
+	str_src = (char *)src;
+	if (n == 0 || dst == src)
+		return (NULL);
+	while (i < n)
+	{
+		str_dst[i] = str_src[i];
+		if (str_src[i] == c)
+			return (str_dst + i + 1);
+		i++;
+	}
+	return (NULL);
 }

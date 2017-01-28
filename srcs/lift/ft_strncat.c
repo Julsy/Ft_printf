@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/22 16:35:18 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/22 16:57:04 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	unsigned int	len;
+	int				i;
+
+	i = 0;
+	len = 0;
+	while (s1[i])
+		i++;
+	while (s1 && s2[len] != '\0' && len < n)
+	{
+		s1[i] = s2[len];
+		i++;
+		len++;
+	}
+	s1[i] = '\0';
+	return (s1);
 }

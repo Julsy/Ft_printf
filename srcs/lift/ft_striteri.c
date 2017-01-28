@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/26 16:10:02 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/26 16:10:02 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	unsigned int i;
+
+	i = 0;
+	if (!s || !f)
+		return ;
+	while (*s)
+	{
+		f(i, s);
+		i++;
+		s++;
+	}
 }

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/10/05 19:21:07 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/10/05 19:21:07 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	t_list *tmp;
+	t_list *tmp_next;
+
+	tmp = *alst;
+	while (tmp)
+	{
+		tmp_next = tmp->next;
+		del(tmp->content, tmp->content_size);
+		free(tmp);
+		tmp = tmp_next;
+	}
+	*alst = NULL;
 }
