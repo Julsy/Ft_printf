@@ -94,9 +94,8 @@ void	process_precision_i(char **str, t_flags *got_flags)
 	tmp = ft_strnew(got_flags->precision);
 	if (*str[0] == '-')
 	{
-		ft_memset(tmp, '0', got_flags->precision - 1);
-		tmp[0] = '-';
-		//printf("TMP %s\n", tmp);
+		ft_memset(tmp, '0', got_flags->precision - (ft_strlen(*str) - 1));
+		tmp = ft_strjoin("-", tmp);
 		*str = ft_strsub(*str, 1, ft_strlen(*str) - 1);
 		tmp = ft_strjoin(tmp, *str);
 	}

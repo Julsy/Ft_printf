@@ -68,8 +68,10 @@ static int		my_printf(char *fmt, va_list *args, int *chars_printed)
 int				ft_printf(char *fmt, ...)
 {
 	va_list		args;
-	static int chars_printed = 0;
+	static int	chars_printed;
 
+	chars_printed = 0;
+	setlocale(LC_ALL, "");
 	va_start(args, fmt);
 	chars_printed = my_printf(fmt, &args, &chars_printed);
 	va_end(args);

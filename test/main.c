@@ -83,8 +83,10 @@ int		main(void)
 	//printf("\nprintf len = %i\n", len3);
 
 	int len = 0;
-	ft_printf("%03.2d", -1);
-	len = printf("%03.2d", -1);
+	int my_len = 0;
+	my_len = ft_printf("@moulitest: %.10d", -42);
+	printf("\nmy return len = %i\n", my_len);
+	len = printf("@moulitest: %.10d", -42);
 	printf("\nprintf len = %i\n", len);
 	return(0);
 }
