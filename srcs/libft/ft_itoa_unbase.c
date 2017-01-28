@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_itoa_unbase.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2017/01/23 14:59:22 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/01/23 14:59:22 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+char	*ft_itoa_unbase(unsigned long long nb, unsigned int base)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	const char *base_str = "0123456789ABCDEF";
+	char *str;
+	int length;
+	unsigned long long value = nb;
+
+	length = 1;
+	while(value >= base)
+	{
+		length++;
+		value = value / base;
+	}
+	str = (char *)malloc(sizeof(char) * (length + 1));
+	str[length] = '\0';
+	while (0 < length--)
+	{
+		str[length] = base_str[nb % base];
+		nb = nb / base;
+	}
+	return (str);
 }

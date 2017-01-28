@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/22 19:22:58 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/23 10:43:21 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	unsigned char	*bytes;
+
+	if (len == 0)
+		return (b);
+	bytes = (unsigned char *)b;
+	while (len > 0)
+	{
+		*bytes = (unsigned char)c;
+		bytes++;
+		len--;
+	}
+	return (b);
 }

@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/09/26 17:41:22 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/09/26 17:41:22 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	char	*new_str;
+	int		i;
+
+	i = 0;
+	if (s && f)
+	{
+		new_str = ft_strnew(ft_strlen(s));
+		if (new_str)
+		{
+			while (s[i] != 0)
+			{
+				new_str[i] = f(i, s[i]);
+				i++;
+			}
+			return (new_str);
+		}
+	}
+	return (NULL);
 }

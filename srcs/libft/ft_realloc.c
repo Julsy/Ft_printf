@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/10 20:08:31 by iiliuk            #+#    #+#             */
-/*   Updated: 2016/11/22 16:53:38 by iiliuk           ###   ########.fr       */
+/*   Created: 2016/11/22 16:50:08 by iiliuk            #+#    #+#             */
+/*   Updated: 2016/11/22 16:50:15 by iiliuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ptrdiff_t	ft_abs(ptrdiff_t n)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	void	*new_ptr;
+
+	new_ptr = (void *)malloc(size);
+	if (new_ptr == NULL)
+		return (NULL);
+	new_ptr = ft_memcpy(new_ptr, ptr, size);
+	free(ptr);
+	return (new_ptr);
 }
