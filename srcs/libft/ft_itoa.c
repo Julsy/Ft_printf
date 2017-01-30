@@ -43,7 +43,7 @@ char			*ft_itoa(ptrdiff_t n)
 	while (nbr)
 	{
 		i--;
-		str[i] = nbr % 10 + '0';
+		str[i] = ft_abs(nbr % 10) + '0';
 		nbr = nbr / 10;
 	}
 	return (str);
