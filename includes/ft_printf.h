@@ -7,6 +7,7 @@
 # include <stdint.h>
 # include "libft.h"
 # include <locale.h>
+# include <wchar.h>
 
 enum
 {
@@ -43,7 +44,7 @@ int					ft_wcharlen(wchar_t c);
 int					ft_strlen_num(unsigned int x);
 void				ft_putstr_tolower(char *s);
 int					isnot_percent(int c);
-int					process_char(t_flags *got_flags, va_list *args);
+int					process_cCsS(t_flags *got_flags, va_list *args);
 int					process_digit(t_flags *got_flags, va_list *args);
 int					process_ptr(t_flags *got_flags, va_list *args);
 int					process_percent(t_flags *got_flags, va_list *args);
@@ -52,6 +53,11 @@ int					process_width_i(unsigned int i, t_flags *got_flags);
 void				process_precision_s(char **str, t_flags *got_flags);
 void				process_precision_i(char **str, t_flags *got_flags);
 void				process_precision_ws(wchar_t **wstr, t_flags *got_flags);
+int					process_wide_str(t_flags *got_flags, va_list *args);
+int					process_wide_char(t_flags *got_flags, va_list *args);
+int					process_o(t_flags *got_flags, va_list *args);
+int					process_u(t_flags *got_flags, va_list *args);
+int					process_x(t_flags *got_flags, va_list *args);
 
 int					ft_printf(char *fmt, ...);
 

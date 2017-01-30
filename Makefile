@@ -3,7 +3,8 @@ NAME = libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
 
 FILES = ft_printf.c helper.c get_flags.c process_char.c process_ptr.c \
-process_digit.c process_percent.c process_flags.c
+process_digit_id.c process_digit_oux.c process_percent.c process_width.c process_precision.c \
+process_wide_char.c
 
 LIBFT = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 ft_memchr.c ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c \
@@ -47,7 +48,7 @@ clean:
 	/bin/rm -f $(OBJECTS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	/bin/rm -f $(NAME) 
 
 re: fclean all
 

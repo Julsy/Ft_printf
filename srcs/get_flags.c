@@ -38,18 +38,16 @@ static void		get_star(char *fmt, t_flags *got_flags, va_list *args)
 		{
 			arg = va_arg(*args, int);
 			if (fmt[i - 1] == '.')
-			{	
-				if (arg >= 0)
-				{
-					got_flags->got_precis = 1;
-					got_flags->precision = arg;
-				}
+			{
+				got_flags->got_precis = (arg >= 0) ? 1 : 0;
+				got_flags->precision = (arg >= 0) ? arg : 0;
 			}
 			else
-				if (arg < 0)
-					got_flags->left_justify = 1;
+			{
+				got_flags->left_justify = (arg < 0) ? 1 : 0;
 				got_flags->got_width = 1;
 				got_flags->width = ft_abs(arg);
+			}
 		}
 		else if (fmt[i] == '*')
 			arg = va_arg(*args, int);
@@ -65,12 +63,7 @@ static void		get_len_mod(char *fmt, t_flags *got_flags)
 	while (fmt[++i] != '\0')
 	{
 		if (fmt[i] == 'h')
-		{
-			if (fmt[++i] == 'h')
-				got_flags->len_mod = hh;
-			else
-				got_flags->len_mod = h;
-		}
+			got_flags->len_mod = (fmt[++i] == 'h') ? hh : h;
 		else if (fmt[i] == 'l')
 		{
 			if (fmt[++i] == 'l')
@@ -95,7 +88,7 @@ static int		get_conv(t_flags *got_flags, va_list *args)
 	len = 0;
 	if (got_flags->conv_spec == 's' || got_flags->conv_spec == 'S' ||
 	got_flags->conv_spec == 'c' || got_flags->conv_spec == 'C')	
-		len += process_char(got_flags, args);
+		len += process_cCsS(got_flags, args);
 	else if (got_flags->conv_spec == 'd' || got_flags->conv_spec == 'D' ||
 	got_flags->conv_spec == 'i' || got_flags->conv_spec == 'o' ||
 	got_flags->conv_spec == 'O' || got_flags->conv_spec == 'u' ||
@@ -109,22 +102,6 @@ static int		get_conv(t_flags *got_flags, va_list *args)
 	return(len);
 }
 
-static void		set_up_flags(t_flags *got_flags)
-{
-	got_flags->pound = 0;
-	// got_flags->pad_zero = 1;
-	// got_flags->left_justify = 1;
-	// got_flags->blank = 1;
-	// got_flags->sign = 1;
-	got_flags->got_width = 0;
-	got_flags->got_precis = 0;
-	got_flags->star = 0;
-	got_flags->width = 0;
-	got_flags->precision = 1;
-	got_flags->length = 0;
-	got_flags->len_mod = none;
-}
-
 int				get_flags(char *fmt, va_list *args)
 {
 	int			i;
@@ -133,19 +110,17 @@ int				get_flags(char *fmt, va_list *args)
 	i = 0;
 	got_flags = (t_flags *)ft_memalloc(sizeof(t_flags));
 	got_flags->conv_spec = fmt[ft_strlen(fmt) - 1];
-	set_up_flags(got_flags);
+	got_flags->precision = 1;
 	while (fmt[i] != '\0')
 	{
-		if (fmt[i] == '#')
-			got_flags->pound = 1;
+		got_flags->pound = (fmt[i] == '#') ? 1 : got_flags->pound;
+		got_flags->sign = (fmt[i] == '+') ? 1 : got_flags->sign;
 		if (fmt[i] == '0' && fmt[i - 1] != '.' && !ft_isdigit(fmt[i - 1]))
 			got_flags->pad_zero = 1;
 		if (fmt[i] == '-')
 			got_flags->left_justify = 1;
 		if (fmt[i] == ' ')
 			got_flags->space = 1;
-		if (fmt[i] == '+')
-			got_flags->sign = 1;
 		i++;
 	}
 	get_width_precision(fmt, got_flags);
