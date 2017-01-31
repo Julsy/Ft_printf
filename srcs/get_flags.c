@@ -105,11 +105,11 @@ static int		get_conv(t_flags *got_flags, va_list *args)
 	{
 		process_precision_s(&str, got_flags);
 		process_width_s(&str, got_flags);
-		if (ft_strlen(str) >= 2)
+		if (got_flags->left_justify || got_flags->space)
+			str[0] = got_flags->conv_spec;
+		else
 			str[ft_strlen(str) - 1] = got_flags->conv_spec;
 		ft_putstr(str);
-		if (ft_strlen(str) < 2)
-			write(1, &got_flags->conv_spec, 1);
 		return (got_flags->width);
 	}
 }
