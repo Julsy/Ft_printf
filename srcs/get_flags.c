@@ -6,6 +6,8 @@ static void		get_width_precision(char *fmt, t_flags *got_flags)
 	int i;
 
 	i = 0;
+	got_flags->width = 1;
+	got_flags->got_width = 0;
 	while(fmt[i] != '\0')
 	{
 		if(fmt[i] != '.' && fmt[i] != '0' && ft_isdigit(fmt[i]))
@@ -83,23 +85,33 @@ static void		get_len_mod(char *fmt, t_flags *got_flags)
 
 static int		get_conv(t_flags *got_flags, va_list *args)
 {
-	int len;
+	char	*str;
 
-	len = 0;
+	str = ft_strnew(1);
 	if (got_flags->conv_spec == 's' || got_flags->conv_spec == 'S' ||
 	got_flags->conv_spec == 'c' || got_flags->conv_spec == 'C')	
-		len += process_cCsS(got_flags, args);
+		return (process_cCsS(got_flags, args));
 	else if (got_flags->conv_spec == 'd' || got_flags->conv_spec == 'D' ||
 	got_flags->conv_spec == 'i' || got_flags->conv_spec == 'o' ||
 	got_flags->conv_spec == 'O' || got_flags->conv_spec == 'u' ||
 	got_flags->conv_spec == 'U' || got_flags->conv_spec == 'x' ||
 	got_flags->conv_spec == 'X')
-		len += process_digit(got_flags, args);
+		return (process_digit(got_flags, args));
 	else if (got_flags->conv_spec == 'p')
-		len += process_ptr(got_flags, args);
+		return (process_ptr(got_flags, args));
 	else if (got_flags->conv_spec == '%')
-		len += process_percent(got_flags, args);
-	return(len);
+		return (process_percent(got_flags, args));
+	else
+	{
+		process_precision_s(&str, got_flags);
+		process_width_s(&str, got_flags);
+		if (ft_strlen(str) >= 2)
+			str[ft_strlen(str) - 1] = got_flags->conv_spec;
+		ft_putstr(str);
+		if (ft_strlen(str) < 2)
+			write(1, &got_flags->conv_spec, 1);
+		return (got_flags->width);
+	}
 }
 
 int				get_flags(char *fmt, va_list *args)

@@ -30,7 +30,6 @@ typedef struct		s_flags
 	int				sign;
 	int				got_width;	
 	int				got_precis;
-	int				star;
 	int				width;
 	unsigned int	precision;
 	unsigned int	length;
@@ -53,6 +52,7 @@ int					process_width_i(unsigned int i, t_flags *got_flags);
 void				process_precision_s(char **str, t_flags *got_flags);
 void				process_precision_i(char **str, t_flags *got_flags);
 void				process_precision_ws(wchar_t **wstr, t_flags *got_flags);
+int					process_width_ws(wchar_t **wstr, t_flags *got_flags);
 int					process_wide_str(t_flags *got_flags, va_list *args);
 int					process_wide_char(t_flags *got_flags, va_list *args);
 int					process_o(t_flags *got_flags, va_list *args);

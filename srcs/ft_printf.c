@@ -18,6 +18,7 @@ static int		get_format(char *fmt, va_list *args, int *chars_printed)
 	char		*tmp;
 	int			len;
 	const char 	spec_type[15] = "sSpdDioOuUxXcC%";
+	const char 	possible_type[19] = "sSpdDioOuUxXcC%hljz";
 
 	len = 0;
 	tmp = fmt;
@@ -25,6 +26,11 @@ static int		get_format(char *fmt, va_list *args, int *chars_printed)
 	while(tmp[len] != '\0')
 	{
 		if(ft_strchr(spec_type, tmp[len]) != NULL)
+		{
+			format = ft_strndup(fmt, ++len);
+			break ;
+		}
+		else if (ft_isalpha(tmp[len]) != 0 && !ft_strchr(possible_type, tmp[len]))
 		{
 			format = ft_strndup(fmt, ++len);
 			break ;
@@ -51,7 +57,7 @@ static int		my_printf(char *fmt, va_list *args, int *chars_printed)
 		else
 		{
 			fmt++;
-			if(*fmt == 'n') //write number of chars written so far to arg
+			if(*fmt == 'n')
 			{
 				ptr = va_arg(*args, int*);
 				*ptr = *chars_printed;
@@ -59,7 +65,6 @@ static int		my_printf(char *fmt, va_list *args, int *chars_printed)
 				continue ;
 			}
 			fmt += get_format(fmt, args, chars_printed);
-			// add check format for errors !
 		}
 	}
 	return(*chars_printed);

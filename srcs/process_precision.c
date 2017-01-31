@@ -6,7 +6,7 @@ void	process_precision_s(char **str, t_flags *got_flags)
 		return ;
 	if (got_flags->length <= got_flags->precision)
 		return ;
-	*str = ft_strndup(*str, got_flags->precision); // cut part of the str
+	*str = ft_strndup(*str, got_flags->precision);
 }
 
 void	process_precision_ws(wchar_t **wstr, t_flags *got_flags)

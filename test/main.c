@@ -84,9 +84,9 @@ int		main(void)
 
 	int len = 0;
 	int my_len = 0;
-	my_len = ft_printf("%lld", -9223372036854775808);
+	my_len = ft_printf("{%-15Z}", 123);
 	printf("\nmy return len = %i\n", my_len);
-	len = printf("%lld", -9223372036854775808);
+	len = printf("{%-15Z}", 123);
 	printf("\nprintf len = %i\n", len);
 	return(0);
 }
