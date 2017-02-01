@@ -30,7 +30,7 @@ static int	process_signed(t_flags *got_flags, va_list *args)
 	if (got_flags->precision == 0 && !sarg)
 		return (process_width_i(0, got_flags));
 	str = ft_itoa(sarg);
-	printf("STR: |%s|\n", str);
+	//printf("STR: |%s|\n", str);
 	got_flags->length = ft_strlen(str);
 	if (got_flags->pad_zero && got_flags->length < (unsigned int)got_flags->width
 	&& !got_flags->got_precis && !got_flags->left_justify)
@@ -40,7 +40,7 @@ static int	process_signed(t_flags *got_flags, va_list *args)
 		got_flags->space) ? got_flags->width - 1 : got_flags->width;
 	}	
 	process_precision_i(&str, got_flags);
-	printf("STR: |%s|\n", str);
+	//printf("STR: |%s|\n", str);
 	if (got_flags->space && str[0] != '-' && !got_flags->sign)
 		str = ft_strjoin(" ", str);
 	if (got_flags->sign && sarg >= 0)
