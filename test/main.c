@@ -84,9 +84,9 @@ int		main(void)
 
 	int len = 0;
 	int my_len = 0;
-	my_len = ft_printf("% Zoooo");
+	my_len = ft_printf("Bla bla %p", (void*)-1);
 	printf("\nmy return len = %i\n", my_len);
-	len = printf("% Zoooo");
+	len = printf("Bla bla %p", (void*)-1);
 	printf("\nprintf len = %i\n", len);
 	return(0);
 }
