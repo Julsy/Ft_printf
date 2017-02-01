@@ -30,16 +30,23 @@ static int	process_signed(t_flags *got_flags, va_list *args)
 	if (got_flags->precision == 0 && !sarg)
 		return (process_width_i(0, got_flags));
 	str = ft_itoa(sarg);
+	printf("STR: |%s|\n", str);
 	got_flags->length = ft_strlen(str);
+	if (got_flags->pad_zero && got_flags->length < (unsigned int)got_flags->width
+	&& !got_flags->got_precis && !got_flags->left_justify)
+	{
+		got_flags->got_precis = 1;
+		got_flags->precision = (got_flags->sign || sarg < 0 ||
+		got_flags->space) ? got_flags->width - 1 : got_flags->width;
+	}	
 	process_precision_i(&str, got_flags);
+	printf("STR: |%s|\n", str);
 	if (got_flags->space && str[0] != '-' && !got_flags->sign)
 		str = ft_strjoin(" ", str);
-	if (got_flags->sign && sarg >= 0 && !got_flags->pad_zero)
+	if (got_flags->sign && sarg >= 0)
 		str = ft_strjoin("+", str);
 	process_width_s(&str, got_flags);
-	if (got_flags->sign && sarg >= 0 && got_flags->pad_zero)
-		str[0] = '+';
-	if (got_flags->pound == 1)
+	if (got_flags->pound && sarg != 0)
 		str = ft_strjoin("0", str);
 	ft_putstr(str);
 	return (ft_strlen(str));
@@ -50,7 +57,7 @@ static int	process_unsigned(t_flags *got_flags, va_list *args)
 	int		len;
 
 	len = 0;
-	if (got_flags->conv_spec == 'o' || got_flags->conv_spec == 'O') /* Print unsigned octal integer */
+	if (got_flags->conv_spec == 'o' || got_flags->conv_spec == 'O')
 	{
 		if (got_flags->conv_spec == 'O')
 		{
@@ -60,7 +67,7 @@ static int	process_unsigned(t_flags *got_flags, va_list *args)
 		len = process_o(got_flags, args);
 		
 	}
-	else if (got_flags->conv_spec == 'u' || got_flags->conv_spec == 'U') /* Print unsigned decimal integer */
+	else if (got_flags->conv_spec == 'u' || got_flags->conv_spec == 'U')
 	{
 		if (got_flags->conv_spec == 'U')
 		{
@@ -80,7 +87,7 @@ int			process_digit(t_flags *got_flags, va_list *args)
 
 	len = 0;
 	if (got_flags->conv_spec == 'd' || got_flags->conv_spec == 'D'
-	|| got_flags->conv_spec == 'i') /* Print signed decimal integer */
+	|| got_flags->conv_spec == 'i')
 	{
 		if (got_flags->conv_spec == 'D')
 		{

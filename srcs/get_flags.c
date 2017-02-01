@@ -7,6 +7,7 @@ static void		get_width_precision(char *fmt, t_flags *got_flags)
 
 	i = 0;
 	got_flags->width = 1;
+	got_flags->got_precis = 0;
 	got_flags->got_width = 0;
 	while(fmt[i] != '\0')
 	{
