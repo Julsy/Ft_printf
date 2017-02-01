@@ -37,7 +37,7 @@ int			process_ptr(t_flags *got_flags, va_list *args)
 
 	len = 0;
 	ptr = va_arg(*args, void*);
-	ptr = ft_itoa_base((long long)ptr, 16);
+	ptr = ft_itoa_unbase((long long)ptr, 16);
 	got_flags->length = ft_strlen(ptr);
 	if (!ft_strcmp(ptr, "0"))
 		len = ptr_null(got_flags, &ptr);

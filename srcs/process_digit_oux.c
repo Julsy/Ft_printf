@@ -3,9 +3,9 @@
 static unsigned long long	get_unsigned_arg(t_flags *got_flags, va_list *args)
 {
 	if (got_flags->len_mod == hh)
-		return (unsigned long long)(char)va_arg(*args, unsigned int);
+		return (unsigned long long)(unsigned char)va_arg(*args, unsigned int);
 	if (got_flags->len_mod == h)
-		return (unsigned long long)(short int)va_arg(*args, unsigned int);
+		return (unsigned long long)(unsigned short int)va_arg(*args, unsigned int);
 	if (got_flags->len_mod == none)
 		return (unsigned long long)va_arg(*args, unsigned int);
 	if (got_flags->len_mod == l)
@@ -30,13 +30,14 @@ int		process_o(t_flags *got_flags, va_list *args)
 	str = ft_itoa_unbase(arg, 8);
 	if (!got_flags->pound)
 	{
-		if (!arg && got_flags->precision == 0)
+		if (!arg && !got_flags->precision)
 			return (process_width_i(0, got_flags));
 	}
 	else
 	{
 		str = ft_strjoin("0", str);
-		if (!(arg && got_flags->precision))
+		if (!arg && (!got_flags->got_precis || 
+		(got_flags->got_precis && !got_flags->precision)))
 		{
 			ft_putchar('0');
 			return (1);

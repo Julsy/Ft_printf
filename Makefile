@@ -31,7 +31,7 @@ OBJECTS = $(FILES:.c=.o) $(LIBFT:.c=.o)
 
 HDR = -I./includes
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re test lib
 
 all: $(NAME)
 
@@ -48,7 +48,7 @@ clean:
 	/bin/rm -f $(OBJECTS)
 
 fclean: clean
-	/bin/rm -f $(NAME) 
+	/bin/rm -f $(NAME) test/libft.a
 
 re: fclean all
 
