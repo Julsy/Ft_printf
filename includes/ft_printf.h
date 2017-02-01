@@ -8,6 +8,7 @@
 # include "libft.h"
 # include <locale.h>
 # include <wchar.h>
+# include <limits.h>
 
 enum
 {
