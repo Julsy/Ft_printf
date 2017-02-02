@@ -14,7 +14,7 @@
 
 ptrdiff_t	cnvt_nbr(ptrdiff_t value, int base, ptrdiff_t *store)
 {
-	int	i;
+	int			i;
 	ptrdiff_t	val;
 
 	i = 0;
@@ -35,7 +35,7 @@ ptrdiff_t	cnvt_nbr(ptrdiff_t value, int base, ptrdiff_t *store)
 
 char		*ft_itoa_base(ptrdiff_t value, int base)
 {
-	const char *base_digits = "0123456789ABCDEF";
+	const char	*base_digits = "0123456789ABCDEF";
 	ptrdiff_t	store[32];
 	int			i;
 	int			j;

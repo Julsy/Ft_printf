@@ -17,20 +17,16 @@ static int		get_format(char *fmt, va_list *args, int *chars_printed)
 	char		*format;
 	char		*tmp;
 	int			len;
-	const char 	spec_type[15] = "sSpdDioOuUxXcC%";
-	const char 	possible_type[19] = "sSpdDioOuUxXcC%hljz";
+	const char	spec_type[15] = "sSpdDioOuUxXcC%";
+	const char	possible_type[19] = "sSpdDioOuUxXcC%hljz";
 
 	len = 0;
 	tmp = fmt;
 	format = NULL;
-	while(tmp[len] != '\0')
+	while (tmp[len] != '\0')
 	{
-		if(ft_strchr(spec_type, tmp[len]) != NULL)
-		{
-			format = ft_strndup(fmt, ++len);
-			break ;
-		}
-		else if (ft_isalpha(tmp[len]) != 0 && !ft_strchr(possible_type, tmp[len]))
+		if (ft_strchr(spec_type, tmp[len]) != NULL ||
+		(ft_isalpha(tmp[len]) != 0 && !ft_strchr(possible_type, tmp[len])))
 		{
 			format = ft_strndup(fmt, ++len);
 			break ;
@@ -40,16 +36,17 @@ static int		get_format(char *fmt, va_list *args, int *chars_printed)
 	if (format == NULL)
 		return (0);
 	*chars_printed += get_flags(format, args);
-	return(len);
+	return (len);
 }
 
 static int		my_printf(char *fmt, va_list *args, int *chars_printed)
 {
-	int *ptr = 0;
+	int *ptr;
 
-	while(*fmt)
+	ptr = 0;
+	while (*fmt)
 	{
-		if(isnot_percent(*fmt) == 1)
+		if (isnot_percent(*fmt) == 1)
 		{
 			*chars_printed += write(1, fmt, 1);
 			fmt++;
@@ -57,7 +54,7 @@ static int		my_printf(char *fmt, va_list *args, int *chars_printed)
 		else
 		{
 			fmt++;
-			if(*fmt == 'n')
+			if (*fmt == 'n')
 			{
 				ptr = va_arg(*args, int*);
 				*ptr = *chars_printed;
@@ -67,7 +64,7 @@ static int		my_printf(char *fmt, va_list *args, int *chars_printed)
 			fmt += get_format(fmt, args, chars_printed);
 		}
 	}
-	return(*chars_printed);
+	return (*chars_printed);
 }
 
 int				ft_printf(char *fmt, ...)
@@ -80,7 +77,7 @@ int				ft_printf(char *fmt, ...)
 	va_start(args, fmt);
 	chars_printed = my_printf(fmt, &args, &chars_printed);
 	va_end(args);
-	return(chars_printed);
+	return (chars_printed);
 }
 
 int				process_non_valid(t_flags *got_flags)
@@ -93,12 +90,14 @@ int				process_non_valid(t_flags *got_flags)
 	{
 		str[0] = got_flags->conv_spec;
 		process_width_s(&str, got_flags);
-	}	
+	}
 	else
 	{
 		process_width_s(&str, got_flags);
 		str[ft_strlen(str) - 1] = got_flags->conv_spec;
 	}
 	ft_putstr(str);
+	free(str);
+	str = NULL;
 	return (got_flags->width);
 }

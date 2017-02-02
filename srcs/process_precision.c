@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_precision.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:28:50 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:28:50 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	process_precision_s(char **str, t_flags *got_flags)
@@ -47,5 +59,7 @@ void	process_precision_i(char **str, t_flags *got_flags)
 		ft_memset(tmp, '0', got_flags->precision - got_flags->length);
 		ft_strcpy(tmp + got_flags->precision - ft_strlen(*str), *str);
 	}
+	free(*str);
+	*str = NULL;
 	*str = tmp;
 }

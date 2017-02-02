@@ -17,11 +17,11 @@ char	*ft_itoa_unbase(unsigned long long nb, unsigned int base)
 	char				*str;
 	int					length;
 	unsigned long long	value;
-	const char base_str[16] = "0123456789ABCDEF";
+	const char			base_str[16] = "0123456789ABCDEF";
 
 	value = nb;
 	length = 1;
-	while(value >= base)
+	while (value >= base)
 	{
 		length++;
 		value = value / base;

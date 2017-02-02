@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_digit_id.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:28:37 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:28:37 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static ptrdiff_t	get_signed_arg(t_flags *got_flags, va_list *args)
@@ -21,7 +33,7 @@ static ptrdiff_t	get_signed_arg(t_flags *got_flags, va_list *args)
 	return (0);
 }
 
-static int	process_signed(t_flags *got_flags, va_list *args)
+static int			process_signed(t_flags *got_flags, va_list *args)
 {
 	char		*str;
 	ptrdiff_t	sarg;
@@ -31,13 +43,14 @@ static int	process_signed(t_flags *got_flags, va_list *args)
 		return (process_width_i(0, got_flags));
 	str = ft_itoa(sarg);
 	got_flags->length = ft_strlen(str);
-	if (got_flags->pad_zero && got_flags->length < (unsigned int)got_flags->width
-	&& !got_flags->got_precis && !got_flags->left_justify)
+	if (got_flags->pad_zero &&
+	!got_flags->got_precis && !got_flags->left_justify &&
+	got_flags->length < (unsigned int)got_flags->width)
 	{
 		got_flags->got_precis = 1;
 		got_flags->precision = (got_flags->sign || sarg < 0 ||
 		got_flags->space) ? got_flags->width - 1 : got_flags->width;
-	}	
+	}
 	process_precision_i(&str, got_flags);
 	if (got_flags->space && str[0] != '-' && !got_flags->sign)
 		str = ft_strjoin(" ", str);
@@ -45,11 +58,10 @@ static int	process_signed(t_flags *got_flags, va_list *args)
 		str = ft_strjoin("+", str);
 	process_width_s(&str, got_flags);
 	ft_putstr(str);
-	free(str);
 	return (ft_strlen(str));
 }
 
-static int	process_unsigned(t_flags *got_flags, va_list *args)
+static int			process_unsigned(t_flags *got_flags, va_list *args)
 {
 	int		len;
 
@@ -62,7 +74,6 @@ static int	process_unsigned(t_flags *got_flags, va_list *args)
 			got_flags->len_mod = l;
 		}
 		len = process_o(got_flags, args);
-		
 	}
 	else if (got_flags->conv_spec == 'u' || got_flags->conv_spec == 'U')
 	{
@@ -78,7 +89,7 @@ static int	process_unsigned(t_flags *got_flags, va_list *args)
 	return (len);
 }
 
-int			process_digit(t_flags *got_flags, va_list *args)
+int					process_digit(t_flags *got_flags, va_list *args)
 {
 	int	len;
 

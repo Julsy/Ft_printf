@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_percent.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:28:46 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:28:46 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int		process_percent(t_flags *got_flags, va_list *args)
@@ -13,5 +25,5 @@ int		process_percent(t_flags *got_flags, va_list *args)
 	len = ft_strlen(str);
 	ft_putstr(str);
 	free(str);
-	return(len);
+	return (len);
 }

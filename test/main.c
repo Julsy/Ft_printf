@@ -83,9 +83,9 @@ int		main(void)
 
 	int len = 0;
 	int my_len = 0;
-	my_len = ft_printf("Bla bla %03*p", 0, 0);
+	my_len = ft_printf("%05.c", 0);
 	printf("\nmy return len = %i\n", my_len);
-	len = printf("Bla bla %03*p", 0, 0);
+	len = printf("%05.c", 0);
 	printf("\nprintf len = %i\n", len);
 	return(0);
 }

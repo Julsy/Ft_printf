@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_digit_oux.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:28:42 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:28:42 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static unsigned long long	get_unsigned_arg(t_flags *got_flags, va_list *args)
@@ -5,7 +17,8 @@ static unsigned long long	get_unsigned_arg(t_flags *got_flags, va_list *args)
 	if (got_flags->len_mod == hh)
 		return (unsigned long long)(unsigned char)va_arg(*args, unsigned int);
 	if (got_flags->len_mod == h)
-		return (unsigned long long)(unsigned short int)va_arg(*args, unsigned int);
+		return (unsigned long long)(unsigned short int)
+		va_arg(*args, unsigned int);
 	if (got_flags->len_mod == none)
 		return (unsigned long long)va_arg(*args, unsigned int);
 	if (got_flags->len_mod == l)
@@ -21,10 +34,10 @@ static unsigned long long	get_unsigned_arg(t_flags *got_flags, va_list *args)
 	return (0);
 }
 
-int		process_o(t_flags *got_flags, va_list *args)
+int							process_o(t_flags *got_flags, va_list *args)
 {
 	char				*str;
-	unsigned long long arg;
+	unsigned long long	arg;
 
 	arg = get_unsigned_arg(got_flags, args);
 	str = ft_itoa_unbase(arg, 8);
@@ -36,12 +49,9 @@ int		process_o(t_flags *got_flags, va_list *args)
 	else
 	{
 		str = ft_strjoin("0", str);
-		if (!arg && (!got_flags->got_precis || 
+		if (!arg && (!got_flags->got_precis ||
 		(got_flags->got_precis && !got_flags->precision)))
-		{
-			ft_putchar('0');
-			return (1);
-		}
+			return (write(1, "0", 1));
 	}
 	got_flags->length = ft_strlen(str);
 	process_precision_i(&str, got_flags);
@@ -50,10 +60,11 @@ int		process_o(t_flags *got_flags, va_list *args)
 	return (ft_strlen(str));
 }
 
-int		process_u(t_flags *got_flags, va_list *args)
+int							process_u(t_flags *got_flags, va_list *args)
 {
 	char				*str;
-	unsigned long long arg;
+	unsigned long long	arg;
+	int					len;
 
 	arg = get_unsigned_arg(got_flags, args);
 	str = ft_itoa_unbase(arg, 10);
@@ -63,10 +74,13 @@ int		process_u(t_flags *got_flags, va_list *args)
 	process_precision_i(&str, got_flags);
 	process_width_s(&str, got_flags);
 	ft_putstr(str);
-	return (ft_strlen(str));
+	len = ft_strlen(str);
+	free(str);
+	str = NULL;
+	return (len);
 }
 
-static int		process_x_not_null(t_flags *got_flags, char *str)
+static int					process_x_not_null(t_flags *got_flags, char *str)
 {
 	got_flags->length = ft_strlen(str);
 	process_precision_i(&str, got_flags);
@@ -85,10 +99,11 @@ static int		process_x_not_null(t_flags *got_flags, char *str)
 	return (ft_strlen(str));
 }
 
-int		process_x(t_flags *got_flags, va_list *args)
+int							process_x(t_flags *got_flags, va_list *args)
 {
 	char				*str;
 	unsigned long long	arg;
+	int					len;
 
 	arg = get_unsigned_arg(got_flags, args);
 	if (arg)
@@ -107,5 +122,8 @@ int		process_x(t_flags *got_flags, va_list *args)
 		process_width_s(&str, got_flags);
 		ft_putstr(str);
 	}
-	return (ft_strlen(str));
+	len = ft_strlen(str);
+	free(str);
+	str = NULL;
+	return (len);
 }

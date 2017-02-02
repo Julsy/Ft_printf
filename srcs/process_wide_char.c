@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_wide_char.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:28:58 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:28:58 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static wchar_t	*ft_wstrdup(wchar_t *str)
@@ -17,7 +29,7 @@ static wchar_t	*ft_wstrdup(wchar_t *str)
 	return (res);
 }
 
-void		wchar_to_str(wchar_t wchar, char *str)
+void			wchar_to_str(wchar_t wchar, char *str)
 {
 	if (wchar <= 0x7F)
 		str[0] = wchar;
@@ -41,7 +53,7 @@ void		wchar_to_str(wchar_t wchar, char *str)
 	}
 }
 
-static char	*wchars_to_str(wchar_t *wstr)
+static char		*wchars_to_str(wchar_t *wstr)
 {
 	size_t	len;
 	char	*res;
@@ -59,10 +71,12 @@ static char	*wchars_to_str(wchar_t *wstr)
 	return (res);
 }
 
-static int	process_wide_str_null(t_flags *got_flags)
+static int		process_wide_str_null(t_flags *got_flags)
 {
+	int		len;
 	char	*str;
 
+	len = 0;
 	str = NULL;
 	if (!got_flags->got_precis ||
 		(got_flags->got_precis && got_flags->precision >= 6))
@@ -71,11 +85,13 @@ static int	process_wide_str_null(t_flags *got_flags)
 		str = ft_strdup("");
 	process_width_s(&str, got_flags);
 	ft_putstr(str);
+	len = ft_strlen(str);
 	free(str);
-	return (ft_strlen(str));
+	str = NULL;
+	return (len);
 }
 
-int			process_wide_str(t_flags *got_flags, va_list *args)
+int				process_wide_str(t_flags *got_flags, va_list *args)
 {
 	wchar_t	*wstr;
 	char	*str;
@@ -91,11 +107,13 @@ int			process_wide_str(t_flags *got_flags, va_list *args)
 		str = wchars_to_str(wstr);
 		process_width_s(&str, got_flags);
 		if (got_flags->got_width)
-			len = ((unsigned int)got_flags->width > ft_wstrlen(wstr)) ? got_flags->width : ft_wstrlen(wstr);
+			len = ((unsigned int)got_flags->width >
+			ft_wstrlen(wstr)) ? got_flags->width : ft_wstrlen(wstr);
 		else
 			len = ft_wstrlen(wstr);
 	}
 	ft_putstr(str);
 	free(str);
-	return(len);
+	str = NULL;
+	return (len);
 }

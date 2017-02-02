@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 16:20:38 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 16:20:38 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
@@ -26,7 +38,7 @@ typedef struct		s_flags
 	int				left_justify;
 	int				space;
 	int				sign;
-	int				got_width;	
+	int				got_width;
 	int				got_precis;
 	int				width;
 	unsigned int	precision;
@@ -39,7 +51,7 @@ int					ft_printf(char *fmt, ...);
 int					get_flags(char *fmt, va_list *args);
 int					process_non_valid(t_flags *got_flags);
 
-int					process_cCsS(t_flags *got_flags, va_list *args);
+int					process_c_s(t_flags *got_flags, va_list *args);
 size_t				ft_wstrlen(wchar_t *str);
 int					ft_wcharlen(wchar_t c);
 void				wchar_to_str(wchar_t wchar, char *str);

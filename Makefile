@@ -18,8 +18,7 @@ ft_putendl.c ft_putnbr.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 ft_lstmap.c ft_list_size.c ft_list_add_back.c ft_list_last.c \
 ft_list_push_params.c ft_list_nth.c ft_list_reverse.c ft_realloc.c ft_abs.c \
-ft_itoa_base.c ft_strndup.c ft_print_memory.c ft_get_next_line.c \
-ft_itoa_unbase.c
+ft_itoa_base.c ft_strndup.c ft_itoa_unbase.c
 
 FILE_SRCS = $(addprefix srcs/,$(FILES))
 
@@ -40,7 +39,7 @@ $(NAME):
 	ar rc $(NAME) $(OBJECTS)
 
 test:
-	gcc $(CFLAGS) $(HDR) $(SRCS) test/no_main.c -L. test/libft.a -o test/a.out
+	gcc $(CFLAGS) $(HDR) $(SRCS) test/main.c -L. test/libft.a -o test/a.out
 	./test/a.out
 	@rm -f $(OBJECTS)
 

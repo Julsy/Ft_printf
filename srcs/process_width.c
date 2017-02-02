@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_width.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:29:02 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:29:02 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static char	*right_justify(char **str, t_flags *got_flags, char *tmp)
@@ -20,7 +32,7 @@ static char	*right_justify(char **str, t_flags *got_flags, char *tmp)
 	return (tmp);
 }
 
-void	process_width_s(char **str, t_flags *got_flags)
+void		process_width_s(char **str, t_flags *got_flags)
 {
 	int		len;
 	char	*tmp;
@@ -34,14 +46,15 @@ void	process_width_s(char **str, t_flags *got_flags)
 	if (got_flags->left_justify == 1)
 	{
 		ft_strcpy(tmp, *str);
-		ft_memset(tmp + ft_strlen(*str), ' ', got_flags->width - ft_strlen(*str));
+		ft_memset(tmp + ft_strlen(*str), ' ',
+		got_flags->width - ft_strlen(*str));
 	}
 	else
 		tmp = right_justify(str, got_flags, tmp);
 	*str = tmp;
 }
 
-int		process_width_i(unsigned int i, t_flags *got_flags)
+int			process_width_i(unsigned int i, t_flags *got_flags)
 {
 	int		len;
 	char	*tmp;
@@ -56,5 +69,7 @@ int		process_width_i(unsigned int i, t_flags *got_flags)
 		ft_memset(tmp, ' ', got_flags->width - i);
 	len = ft_strlen(tmp);
 	ft_putstr(tmp);
+	free(tmp);
+	tmp = NULL;
 	return (len);
 }

@@ -1,5 +1,16 @@
-#include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_flags.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iiliuk <iiliuk@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/01 17:28:25 by iiliuk            #+#    #+#             */
+/*   Updated: 2017/02/01 17:28:26 by iiliuk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "ft_printf.h"
 
 static void		get_width_precision(char *fmt, t_flags *got_flags)
 {
@@ -10,16 +21,16 @@ static void		get_width_precision(char *fmt, t_flags *got_flags)
 	got_flags->precision = 1;
 	got_flags->got_precis = 0;
 	got_flags->got_width = 0;
-	while(fmt[i] != '\0')
+	while (fmt[i] != '\0')
 	{
-		if(fmt[i] != '.' && fmt[i] != '0' && ft_isdigit(fmt[i]))
+		if (fmt[i] != '.' && fmt[i] != '0' && ft_isdigit(fmt[i]))
 		{
 			got_flags->got_width = 1;
 			got_flags->width = ft_atoi(fmt + i);
 			while (fmt[i] && ft_isdigit(fmt[i]))
 				i++;
 		}
-		if(fmt[i] == '.' && fmt[i + 1] != '*')
+		if (fmt[i] == '.' && fmt[i + 1] != '*')
 		{
 			got_flags->got_precis = 1;
 			got_flags->precision = ft_atoi(fmt + i + 1);
@@ -88,8 +99,8 @@ static void		get_len_mod(char *fmt, t_flags *got_flags)
 static int		process_conv(t_flags *got_flags, va_list *args)
 {
 	if (got_flags->conv_spec == 's' || got_flags->conv_spec == 'S' ||
-	got_flags->conv_spec == 'c' || got_flags->conv_spec == 'C')	
-		return (process_cCsS(got_flags, args));
+	got_flags->conv_spec == 'c' || got_flags->conv_spec == 'C')
+		return (process_c_s(got_flags, args));
 	else if (got_flags->conv_spec == 'd' || got_flags->conv_spec == 'D' ||
 	got_flags->conv_spec == 'i' || got_flags->conv_spec == 'o' ||
 	got_flags->conv_spec == 'O' || got_flags->conv_spec == 'u' ||
@@ -129,5 +140,5 @@ int				get_flags(char *fmt, va_list *args)
 	get_len_mod(fmt, got_flags);
 	i = process_conv(got_flags, args);
 	free(got_flags);
-	return(i);
+	return (i);
 }
