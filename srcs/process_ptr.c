@@ -18,13 +18,9 @@ static int	ptr_null(t_flags *got_flags, char **ptr)
 
 static int	pointer(t_flags *got_flags, char **ptr)
 {
-	if (got_flags->precision == 0 && got_flags->got_precis)
-		*ptr[0] = 0;
 	process_precision_i(ptr, got_flags);
 	if (got_flags->pound && got_flags->got_precis)
-	{
 		got_flags->pad_zero = 0;
-	}
 	*ptr = ft_strjoin("0x", *ptr);
 	process_width_s(ptr, got_flags);
 	return (ft_strlen(*ptr));
@@ -37,7 +33,7 @@ int			process_ptr(t_flags *got_flags, va_list *args)
 
 	len = 0;
 	ptr = va_arg(*args, void*);
-	ptr = ft_itoa_unbase((long long)ptr, 16);
+	ptr = ft_itoa_unbase((unsigned long long)ptr, 16);
 	got_flags->length = ft_strlen(ptr);
 	if (!ft_strcmp(ptr, "0"))
 		len = ptr_null(got_flags, &ptr);

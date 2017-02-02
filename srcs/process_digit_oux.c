@@ -88,7 +88,7 @@ static int		process_x_not_null(t_flags *got_flags, char *str)
 int		process_x(t_flags *got_flags, va_list *args)
 {
 	char				*str;
-	unsigned long long arg;
+	unsigned long long	arg;
 
 	arg = get_unsigned_arg(got_flags, args);
 	if (arg)
@@ -103,6 +103,7 @@ int		process_x(t_flags *got_flags, va_list *args)
 			str[0] = 0;
 		else
 			str = ft_strjoin("0", str);
+		process_precision_i(&str, got_flags);
 		process_width_s(&str, got_flags);
 		ft_putstr(str);
 	}

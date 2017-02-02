@@ -7,6 +7,7 @@ static void		get_width_precision(char *fmt, t_flags *got_flags)
 
 	i = 0;
 	got_flags->width = 1;
+	got_flags->precision = 1;
 	got_flags->got_precis = 0;
 	got_flags->got_width = 0;
 	while(fmt[i] != '\0')
@@ -84,11 +85,8 @@ static void		get_len_mod(char *fmt, t_flags *got_flags)
 	}
 }
 
-static int		get_conv(t_flags *got_flags, va_list *args)
+static int		process_conv(t_flags *got_flags, va_list *args)
 {
-	char	*str;
-
-	str = ft_strnew(1);
 	if (got_flags->conv_spec == 's' || got_flags->conv_spec == 'S' ||
 	got_flags->conv_spec == 'c' || got_flags->conv_spec == 'C')	
 		return (process_cCsS(got_flags, args));
@@ -103,16 +101,7 @@ static int		get_conv(t_flags *got_flags, va_list *args)
 	else if (got_flags->conv_spec == '%')
 		return (process_percent(got_flags, args));
 	else
-	{
-		process_precision_s(&str, got_flags);
-		process_width_s(&str, got_flags);
-		if (got_flags->left_justify || got_flags->space)
-			str[0] = got_flags->conv_spec;
-		else
-			str[ft_strlen(str) - 1] = got_flags->conv_spec;
-		ft_putstr(str);
-		return (got_flags->width);
-	}
+		return (process_non_valid(got_flags));
 }
 
 int				get_flags(char *fmt, va_list *args)
@@ -123,7 +112,6 @@ int				get_flags(char *fmt, va_list *args)
 	i = 0;
 	got_flags = (t_flags *)ft_memalloc(sizeof(t_flags));
 	got_flags->conv_spec = fmt[ft_strlen(fmt) - 1];
-	got_flags->precision = 1;
 	while (fmt[i] != '\0')
 	{
 		got_flags->pound = (fmt[i] == '#') ? 1 : got_flags->pound;
@@ -139,7 +127,7 @@ int				get_flags(char *fmt, va_list *args)
 	get_width_precision(fmt, got_flags);
 	get_star(fmt, got_flags, args);
 	get_len_mod(fmt, got_flags);
-	i = get_conv(got_flags, args);
-	//free(got_flags);
+	i = process_conv(got_flags, args);
+	free(got_flags);
 	return(i);
 }

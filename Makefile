@@ -40,7 +40,7 @@ $(NAME):
 	ar rc $(NAME) $(OBJECTS)
 
 test:
-	gcc $(CFLAGS) $(HDR) $(SRCS) test/main.c -L. test/libft.a -o test/a.out
+	gcc $(CFLAGS) $(HDR) $(SRCS) test/no_main.c -L. test/libft.a -o test/a.out
 	./test/a.out
 	@rm -f $(OBJECTS)
 

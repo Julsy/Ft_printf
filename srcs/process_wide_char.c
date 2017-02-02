@@ -1,43 +1,5 @@
 #include "ft_printf.h"
 
-static void		ft_putwchar(wchar_t c)
-{
-	if (c <= 0x7F)
-		ft_putchar(c);
-	else if (c <= 0x7FF)
-	{
-		ft_putchar((c >> 6) + 0xC0);
-		ft_putchar((c & 0x3F) + 0x80);
-	}
-	else if (c <= 0xFFFF)
-	{
-		ft_putchar((c >> 12) + 0xE0);
-		ft_putchar(((c >> 6) & 0x3F) + 0x80);
-		ft_putchar((c & 0x3F) + 0x80);
-	}
-	else if (c <= 0x10FFFF)
-	{
-		ft_putchar((c >> 18) + 0xF0);
-		ft_putchar(((c >> 12) & 0x3F) + 0x80);
-		ft_putchar(((c >> 6) & 0x3F) + 0x80);
-		ft_putchar((c & 0x3F) + 0x80);
-	}
-}
-
-// static void		ft_putwstr(wchar_t *s)
-// {
-// 	int i;
-
-// 	if (!s)
-// 		return ;
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		ft_putwchar(s[i]);
-// 		i++;
-// 	}
-// }
-
 static wchar_t	*ft_wstrdup(wchar_t *str)
 {
 	wchar_t	*res;
@@ -55,49 +17,65 @@ static wchar_t	*ft_wstrdup(wchar_t *str)
 	return (res);
 }
 
-void	wchar_to_str(wchar_t in, char *str)
+void		wchar_to_str(wchar_t wchar, char *str)
 {
-	if (in <= 0x7F)
-		str[0] = in;
-	else if (in <= 0x7FF)
+	if (wchar <= 0x7F)
+		str[0] = wchar;
+	else if (wchar <= 0x7FF)
 	{
-		str[0] = 192 | (((unsigned int)(in) >> 6) & 63);
-		str[1] = 128 | ((unsigned int)(in) & 63);
+		str[0] = 192 | (((unsigned int)(wchar) >> 6) & 63);
+		str[1] = 128 | ((unsigned int)(wchar) & 63);
 	}
-	else if (in <= 0xFFFF)
+	else if (wchar <= 0xFFFF)
 	{
-		str[0] = 224 | (((unsigned int)(in) >> 12) & 63);
-		str[1] = 128 | (((unsigned int)(in) >> 6) & 63);
-		str[2] = 128 | ((unsigned int)(in) & 63);
+		str[0] = 224 | (((unsigned int)(wchar) >> 12) & 63);
+		str[1] = 128 | (((unsigned int)(wchar) >> 6) & 63);
+		str[2] = 128 | ((unsigned int)(wchar) & 63);
 	}
-	else if (in <= 0x10FFFF)
+	else if (wchar <= 0x10FFFF)
 	{
-		str[0] = 240 | (((unsigned int)(in) >> 18) & 63);
-		str[1] = 128 | (((unsigned int)(in) >> 12) & 63);
-		str[2] = 128 | (((unsigned int)(in) >> 6) & 63);
-		str[3] = 128 | ((unsigned int)(in) & 63);
+		str[0] = 240 | (((unsigned int)(wchar) >> 18) & 63);
+		str[1] = 128 | (((unsigned int)(wchar) >> 12) & 63);
+		str[2] = 128 | (((unsigned int)(wchar) >> 6) & 63);
+		str[3] = 128 | ((unsigned int)(wchar) & 63);
 	}
 }
 
-char	*wchars_to_str(wchar_t *in)
+static char	*wchars_to_str(wchar_t *wstr)
 {
 	size_t	len;
-	char	*ret;
-	int		pos;
+	char	*res;
+	int		i;
 
-	len = ft_wstrlen(in);
-	ret = ft_strnew(len);
-	pos = 0;
-	while (*in)
+	len = ft_wstrlen(wstr);
+	res = ft_strnew(len);
+	i = 0;
+	while (*wstr)
 	{
-		wchar_to_str(*in, ret + pos);
-		pos += ft_wcharlen(*in);
-		in++;
+		wchar_to_str(*wstr, res + i);
+		i += ft_wcharlen(*wstr);
+		wstr++;
 	}
-	return (ret);
+	return (res);
 }
 
-int		process_wide_str(t_flags *got_flags, va_list *args)
+static int	process_wide_str_null(t_flags *got_flags)
+{
+	char	*str;
+
+	str = NULL;
+	if (!got_flags->got_precis ||
+		(got_flags->got_precis && got_flags->precision >= 6))
+		str = ft_strdup("(null)");
+	else
+		str = ft_strdup("");
+	process_width_s(&str, got_flags);
+	ft_putstr(str);
+	free(str);
+	return (ft_strlen(str));
+}
+
+int			process_wide_str(t_flags *got_flags, va_list *args)
 {
 	wchar_t	*wstr;
 	char	*str;
@@ -106,15 +84,7 @@ int		process_wide_str(t_flags *got_flags, va_list *args)
 	len = 0;
 	wstr = ft_wstrdup(va_arg(*args, wchar_t*));
 	if (wstr == NULL)
-	{
-		if (!got_flags->got_precis ||
-			(got_flags->got_precis && got_flags->precision >= 6))
-			str = ft_strdup("(null)");
-		else
-			str = ft_strdup("");
-		process_width_s(&str, got_flags);
-		len = ft_strlen(str);
-	}
+		return (process_wide_str_null(got_flags));
 	else
 	{
 		process_precision_ws(&wstr, got_flags);
@@ -126,18 +96,6 @@ int		process_wide_str(t_flags *got_flags, va_list *args)
 			len = ft_wstrlen(wstr);
 	}
 	ft_putstr(str);
+	free(str);
 	return(len);
-}
-
-int		process_wide_char(t_flags *got_flags, va_list *args)
-{
-	int		len;
-	wchar_t	wchar;
-
-	len = 0;	
-	wchar = va_arg(*args, wchar_t);
-	len = ft_wcharlen(wchar);
-	len += process_width_i(len, got_flags);
-	ft_putwchar(wchar);
-	return (len);
 }

@@ -68,7 +68,6 @@ int		main(void)
 	// len = printf("Test len_mod: %ld, %hhi, %O, %hd, %llx\n", 12345, 123456, 12345, 123456, 12345);
 	// printf("printf len = %i\n", len);
 
-	// // Bad cases:
 	//int len1 = 0;
 	//int len2 = 0;
 	//int len3 = 0;
@@ -84,9 +83,9 @@ int		main(void)
 
 	int len = 0;
 	int my_len = 0;
-	my_len = ft_printf("Bla bla %p", (void*)-1);
+	my_len = ft_printf("Bla bla %03*p", 0, 0);
 	printf("\nmy return len = %i\n", my_len);
-	len = printf("Bla bla %p", (void*)-1);
+	len = printf("Bla bla %03*p", 0, 0);
 	printf("\nprintf len = %i\n", len);
 	return(0);
 }

@@ -49,6 +49,24 @@ static int	process_char(t_flags *got_flags, va_list *args)
 	return (len);
 }
 
+static int	process_wide_char(t_flags *got_flags, va_list *args)
+{
+	int		len;
+	char	*str;
+	wchar_t	wchar;
+
+	len = 0;
+	wchar = va_arg(*args, wchar_t);
+	len = ft_wcharlen(wchar);
+	str = ft_strnew(len);
+	if (wchar == 0)
+		write(1, "\0", 1);
+	wchar_to_str(wchar, str);
+	process_width_s(&str, got_flags);
+	ft_putstr(str);
+	free(str);
+	return (len);
+}
 
 int		process_cCsS(t_flags *got_flags, va_list *args)
 {

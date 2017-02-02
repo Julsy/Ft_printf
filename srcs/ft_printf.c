@@ -80,6 +80,25 @@ int				ft_printf(char *fmt, ...)
 	va_start(args, fmt);
 	chars_printed = my_printf(fmt, &args, &chars_printed);
 	va_end(args);
-	//printf("\nmy return len = %i\n", chars_printed);
 	return(chars_printed);
+}
+
+int				process_non_valid(t_flags *got_flags)
+{
+	char	*str;
+
+	str = ft_strnew(1);
+	if (got_flags->left_justify || got_flags->space ||
+	!got_flags->got_width || !got_flags->got_precis)
+	{
+		str[0] = got_flags->conv_spec;
+		process_width_s(&str, got_flags);
+	}	
+	else
+	{
+		process_width_s(&str, got_flags);
+		str[ft_strlen(str) - 1] = got_flags->conv_spec;
+	}
+	ft_putstr(str);
+	return (got_flags->width);
 }
